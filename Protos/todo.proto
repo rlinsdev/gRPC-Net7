@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option csharp_namespace = "ToDoGrpc";
+
+package todoit;
+
+service ToDoIt {
+
+
+// Create
+
+// Read single
+
+//Read list
+
+// update
+
+//delete
+
+}
