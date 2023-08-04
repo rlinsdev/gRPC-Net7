@@ -12,6 +12,7 @@
 $ dotnet --version
 $ dotnet run
 $ dotnet new grpc -o ToDoGrpc
+$ dotnet ef migration add InitialMigration
 #packages:
 $ dotnet add package microsoft.entityFrameworkCore.sqlite
 $ dotnet add package microsoft.entityFrameworkCore.design
