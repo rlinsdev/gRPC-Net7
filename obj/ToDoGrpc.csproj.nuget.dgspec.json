@@ -46,6 +46,26 @@
             "Grpc.AspNetCore": {
               "target": "Package",
               "version": "[2.49.0, )"
+            },
+            "grpc.tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.56.2, )"
+            },
+            "microsoft.aspnetcore.grpc.jsontranscoding": {
+              "target": "Package",
+              "version": "[7.0.9, )"
+            },
+            "microsoft.entityFrameworkCore.design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.9, )"
+            },
+            "microsoft.entityFrameworkCore.sqlite": {
+              "target": "Package",
+              "version": "[7.0.9, )"
             }
           },
           "imports": [
