@@ -6,15 +6,37 @@ package todoit;
 
 service ToDoIt {
 
-
 // Create
+rpc CreateToDo(CreateTodoRequest) returns (CreateTodoResponse) {
+
+}
 
 // Read single
 
-//Read list
+// Read list
 
 // update
 
-//delete
+// delete
 
+}
+
+message CreateTodoRequest {
+  string title = 1;
+  string description = 2;
+}
+
+message CreateToDoResponse {
+  int32 id = 1;
+}
+
+message ReadToRequest {
+  int32 id = 1;
+}
+
+message ReadToResponse {
+  int32 id = 1;
+  string title = 2;
+  string description = 3;
+  string to_do_status = 4;
 }
