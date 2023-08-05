@@ -25,5 +25,6 @@ $ dotnet add package microsoft.aspnetcore.grpc.jsontranscoding
 
 ## Links:
 * [Course](https://www.youtube.com/watch?v=Rqz9XiSqH3E)
+* [GitHub](https://github.com/rlinsdev/gRPC-Net7)
 
-28"21
+53"

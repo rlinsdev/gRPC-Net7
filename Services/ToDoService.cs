@@ -17,9 +17,7 @@ public class ToDoService: ToDoIt.ToDoItBase
     public override async Task<CreateToDoResponse> CreateToDo(CreateToDoRequest request, ServerCallContext context)
     {
         if (request.Title == string.Empty || request.Description == string.Empty)
-        {
             throw new RpcException(new Status(StatusCode.InvalidArgument, "You Must Supply a valid object"));
-        }
 
         var toDoItem = new ToDoItem
         {
@@ -70,5 +68,26 @@ public class ToDoService: ToDoIt.ToDoItBase
             });
         }
         return await Task.FromResult(response);
+    }
+
+    public override async Task<UpdateToDoResponse> UpdateToDo(UpdateToDoRequest request, ServerCallContext context)
+    {
+        if (request.Id <= 0 || request.Title == string.Empty || request.Description == string.Empty)
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "You Must Supply a valid object"));
+
+        var toDoItem = await _dbContext.ToDoItems.FirstOrDefaultAsync(t=>t.Id == request.Id);
+
+        if (toDoItem == null)
+            throw new RpcException(new Status(StatusCode.NotFound, $"No Task with code {request.Id} "));
+
+        toDoItem.Title = request.Title;
+        toDoItem.Description = request.Description;
+        toDoItem.ToDoStatus = request.ToDoStatus;
+
+        await _dbContext.SaveChangesAsync();
+
+        return await Task.FromResult(new UpdateToDoResponse{
+            Id = toDoItem.Id,
+        });
     }
 }
