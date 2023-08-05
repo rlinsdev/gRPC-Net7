@@ -45,7 +45,7 @@ public class ToDoService: ToDoIt.ToDoItBase
 
         if (toDoItem != null)
         {
-            return await Task.FromResult(new ReadToDoResponse{
+            return await Task.FromResult(new ReadToDoResponse {
                 Id = toDoItem.Id,
                 Title = toDoItem.Title,
                 Description = toDoItem.Description,
@@ -53,5 +53,22 @@ public class ToDoService: ToDoIt.ToDoItBase
             });
         }
         throw new RpcException(new Status(StatusCode.NotFound, $"No Task with id {request.Id}"));
+    }
+
+    public override async Task<GetAllResponse> ListToDo(GetAllRequest request, ServerCallContext context)
+    {
+        var response = new GetAllResponse();
+        var toDoItems = await _dbContext.ToDoItems.ToListAsync();
+
+        foreach (var toDoItem in toDoItems)
+        {
+            response.ToDo.Add(new ReadToDoResponse {
+                Id = toDoItem.Id,
+                Title = toDoItem.Title,
+                Description = toDoItem.Description,
+                ToDoStatus = toDoItem.ToDoStatus
+            });
+        }
+        return await Task.FromResult(response);
     }
 }
