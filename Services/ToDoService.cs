@@ -1,4 +1,5 @@
 using Grpc.Core;
+using Microsoft.EntityFrameworkCore;
 using ToDoGrpc.Data;
 using ToDoGrpc.Models;
 
@@ -32,8 +33,25 @@ public class ToDoService: ToDoIt.ToDoItBase
 
         return await Task.FromResult(new CreateToDoResponse{
             Id = toDoItem.Id
-
         });
+    }
 
+    public override async Task<ReadToDoResponse> ReadToDo(ReadToDoRequest request, ServerCallContext context)
+    {
+        if (request.Id <= 0)
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Resource argument must be greater than 0"));
+        
+        var toDoItem = await _dbContext.ToDoItems.FirstOrDefaultAsync(t=>t.Id == request.Id);
+
+        if (toDoItem != null)
+        {
+            return await Task.FromResult(new ReadToDoResponse{
+                Id = toDoItem.Id,
+                Title = toDoItem.Title,
+                Description = toDoItem.Description,
+                ToDoStatus = toDoItem.ToDoStatus
+            });
+        }
+        throw new RpcException(new Status(StatusCode.NotFound, $"No Task with id {request.Id}"));
     }
 }
